@@ -12,7 +12,7 @@ import os
 
 
 class ApplicationConfig:
-    #getting secret key
+    #getting secret key form env file
     
     SECRET_KEY=os.environ.get('SECRET_KEY')
     
