@@ -1,0 +1,6 @@
+flask
+flask-session
+redis
+python-dotenv
+bcrypt
+flask-mail
