@@ -18,7 +18,7 @@ class ApplicationConfig:
     
     #configuring the database
     
-    SQLALCHEMY_DATABASE_URI = 'sqlite:////user.db'
+    SQLALCHEMY_DATABASE_URI = 'sqlite:////user.db' or os.environ.get('DATABASE_URI')
     SQLALCHEMY_ECHO =True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     
