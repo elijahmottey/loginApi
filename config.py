@@ -1,0 +1,6 @@
+
+
+
+class ApplicationConfig:
+    pass
+
