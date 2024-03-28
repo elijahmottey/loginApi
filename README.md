@@ -1,7 +1,8 @@
 # Login API using Flask
 
 ## Description
-This is a simple login API built using Flask framework in Python. It provides endpoints for user authentication which can be integrated with a React frontend to facilitate user login functionality. Redis server is utilized to store user sessions upon successful login.
+This is a simple login API built using Flask framework in Python. It provides endpoints for user authentication which can be integrated with a React frontend to facilitate user login functionality. Redis server is utilized to store user sessions upon successful login. Sqlite database is use to store data from the user. Bcrypt was also employed to decrypt the password text .
+
 
 ## Technologies Used
 - Flask
@@ -9,6 +10,8 @@ This is a simple login API built using Flask framework in Python. It provides en
 - Bcrypt
 - Flask-Session
 - Redis
+- Sqlite
+- 
 
 ## Installation
 1. Clone the repository:

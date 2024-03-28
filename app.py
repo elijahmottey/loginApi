@@ -1,7 +1,7 @@
 from flask import Flask,request,jsonify
 from models import db, User
 from config import ApplicationConfig
-from bcrypt import _bcrypt
+
 from werkzeug.security import generate_password_hash,check_password_hash
  
 
@@ -13,12 +13,10 @@ app.config.from_object(ApplicationConfig)
 
 #initializing database
 
-db.init_app(app)
-with app.app_context():
-    db.create_all()
+
     
 #create a register route
-@app.route('/register')
+@app.route('/register', methods=['POST'])
 def register():
     firstName = request.json['firstName']
     lastName = request.json['lastName']
@@ -33,17 +31,21 @@ def register():
         }),409
         
     #hashing password 
-    hashPassword = _bcrypt.generate_password_hash(password)
-    newUser = User(firstName=firstName,lastName=lastName,email=email, password=hashPassword)
+    #hashPassword = generate_password_hash(password)
+    newUser = User(firstName=firstName,lastName=lastName,email=email, password=generate_password_hash(password))
     
     #adding new user to db
     db.session.add(newUser)
     #saving new user
     db.session.commit()
     
-    return 'registered'
+    return jsonify({
+        "status":"sucessfully added"
+    }),201
 
-
+db.init_app(app)
+with app.app_context():
+    db.create_all()
 # run file
 
 if __name__ == '__main__':
