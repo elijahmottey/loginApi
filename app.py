@@ -1,7 +1,7 @@
-from flask import Flask,request,jsonify
+from flask import Flask,request,jsonify,session
 from models import db, User
 from config import ApplicationConfig
-
+from flask_session import Session
 from werkzeug.security import generate_password_hash,check_password_hash
  
 
@@ -11,7 +11,12 @@ app=Flask(__name__)
 # configuration
 app.config.from_object(ApplicationConfig)
 
+serverSession= Session(app)
+
 #initializing database
+db.init_app(app)
+with app.app_context():
+    db.create_all()
 
 
     
@@ -42,10 +47,30 @@ def register():
     return jsonify({
         "status":"sucessfully added"
     }),201
+    
+    
+    
+# user login
+@app.route('/userLogin', methods=['POST'])
+def userLogin():
+    email = request.json['email']
+    password = request.json['password']
+    
+    user = User.query.filter_by(email=email).first()
+    
+    if not user or user is None:
+        return jsonify({"status":"uauthorized",
+                         "error":"email is not correct"}),401
+    
+    if not check_password_hash(user.password,password):
+         return jsonify({"status":"uauthorized",
+                         "error":"password is not correct"}),401
+    
+    session['user_id']=user.id
+    
+    return jsonify({"status":"user login sucessful"}),201
 
-db.init_app(app)
-with app.app_context():
-    db.create_all()
+
 # run file
 
 if __name__ == '__main__':

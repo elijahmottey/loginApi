@@ -7,7 +7,7 @@ redis configuration
 
 """
 from dotenv import load_dotenv
-import os
+import os,redis
 
 
 
@@ -21,5 +21,11 @@ class ApplicationConfig:
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URI') or 'sqlite:///user.db' 
     SQLALCHEMY_ECHO =True
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    
+    #adding redis configuration
+    SESSION_TYPE='redis'
+    SESSION_PERMANENT= False
+    SESSION_use_signer = True
+    SESSSION_REDIS = redis.from_url("redis://127.0.0.1:6379")
     
 
